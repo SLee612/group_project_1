@@ -8,9 +8,9 @@ var newsSearchInput = ''
 var savedSearches = []
 var newsStory= $('#News-Story');
 
-var currentDate = moment().format('dddd MMMM Do YYYY');
-$("#current-date").text ("(" + currentDate + ")");
 
+var today = moment().format("LL");
+console.log(today)
 
 var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
@@ -98,5 +98,28 @@ function getFormInfo(){
 
   
 
+  $.ajax({
+    url: `https://www.reddit.com/r/memes.json?`,
+    method: 'GET',
+  }).then(function (response){
+      console.log(response)
+      for ( var i = 0; i < 3; i++ ){
+      var newRowEl = $('<row>');
+        newRowEl.attr('class', 'row');
 
-//----------------------------------
+      var memeImgEl = $('<img>');
+        memeImgEl.attr('id', 'image' + i)
+
+      var numberOfMemes = response.data.children.length
+      // console.log(numberOfMemes)
+      var randomIdx = Math.floor(Math.random()* numberOfMemes);
+      console.log(randomIdx)
+      
+      console.log(response.data.children[randomIdx].data.url_overridden_by_dest)
+      memeImgEl.attr('src', response.data.children[randomIdx].data.url_overridden_by_dest);
+      newRowEl.append(memeImgEl);
+      memeImgEl.attr('id', "meme_image") ;
+      
+      $('#Reddit-Story').append(newRowEl);
+    }
+  });
