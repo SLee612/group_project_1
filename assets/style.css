@@ -2,45 +2,125 @@
     box-sizing:border-box;
     padding: 0;
     margin: 0; 
+    
 }
 
 body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: gainsboro;
+    
 
 }
 
 header {
     
-    background-color: black;
-    color: white;
+    background-color: #E4E3D0;
+    color: #343939;
     text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-weight: bolder;
+    font-family: 'Newsreader', serif;
+    font-weight: 900;
     padding: 25px;
-    border: 2px solid lightgray;
-    line-height: 4;
-    letter-spacing: .5em;
+    border: 2px solid #8B8D8D;
+    box-shadow: 2px 2x 6px darkgray;
+}
+
+h2 {
+    font-style: italic;
 }
 
 
-.background-image {
-    display: flex;
-     height: 100%;
-     width: 100%;
-     border-radius: 0px
- }
 
- .container {
+ /* form {
     display: flex;
-    position: relative;
+    position: absolute;
     font-size: 18px;
-    top: 100px;
-    left: 100px;
+    top: 200px;
+    left: 10px;
     text-align: center;
-    height: 50px;
-    width: 100px;
+  
     border: 2px solid rgb(233, 241, 185);
-    }
+    } */
+
+.background-image {
+        display: flex;
+         height: 100%;
+         width: 100%;
+         border-radius: 0px
+     }
+
+     @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+
+.flexbox {
+  background: linear-gradient(#F8F0B3, #8B8D8D);
+  width: 30%;
+  height: 20%;
+  display: flex;
+  
+  align-items: center;
+  position: relative;
+  margin-top: -600px;
+  border: 2px solid #8B8D8D;
+  box-shadow: 2px 2px 6px darkgray;
+}
+
+.search {
+  margin: 20px;
+}
+
+.search > h3 {
+  font-weight: normal;
+}
+
+.search > h1,
+.search > h3 {
+  color: #343939;
+  margin-bottom: 15px;
+  text-shadow: 0 1px #0091c2;
+}
+
+.search > div {
+  display: inline-block;
+  position: relative;
+  filter: drop-shadow(0 1px #0091c2);
+}
+
+.search > div:after {
+  content: "";
+  background: white;
+  width: 4px;
+  height: 20px;
+  position: relative;
+  top: 40px;
+  right: 2px;
+  transform: rotate(135deg);
+}
+
+.search > div > input {
+  color: white;
+  font-size: 16px;
+  background: transparent;
+  width: 25px;
+  height: 25px;
+  padding: 10px;
+  border: solid 3px white;
+  outline: none;
+  border-radius: 35px;
+  transition: width 0.5s;
+}
+
+.search > div > input::placeholder {
+  color: #efefef;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+.search > div > input:focus::placeholder {
+  opacity: 1;
+}
+
+.search > div > input:focus,
+.search > div > input:not(:placeholder-shown) {
+  width: 250px;
+}
