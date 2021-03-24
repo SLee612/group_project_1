@@ -8,6 +8,7 @@ var newsSearchInput = ''
 var savedSearches = []
 var newsStory= $('#News-Story');
 
+
 var today = moment().format("LL");
 console.log(today)
 
