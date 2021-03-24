@@ -97,17 +97,46 @@ function getFormInfo(){
 
   
 
+  // $.ajax({
+  //   url: `https://www.reddit.com/r/memes.json?`,
+  //   method: 'GET',
+  // }).then(function (response){
+  //     console.log(response)
+  //     for ( var i = 0; i < 3; i++ ){
+  //     var newRowEl = $('<row>');
+  //       newRowEl.attr('class', 'row');
+
+  //     var memeImgEl = $('<img>');
+  //       memeImgEl.attr('id', 'image' + i)
+
+  //     var numberOfMemes = response.data.children.length
+  //     // console.log(numberOfMemes)
+  //     var randomIdx = Math.floor(Math.random()* numberOfMemes);
+  //     console.log(randomIdx)
+      
+  //     console.log(response.data.children[randomIdx].data.url_overridden_by_dest)
+  //     memeImgEl.attr('src', response.data.children[randomIdx].data.url_overridden_by_dest);
+  //     newRowEl.append(memeImgEl);
+  //     memeImgEl.attr('id', "meme_image") ;
+      
+  //     $('#Reddit-Story').append(newRowEl);
+  //   }
+  // });
+
   $.ajax({
-    url: `https://www.reddit.com/r/memes.json?`,
+    url: `https://www.reddit.com/r/memes.json?after=${after}`,
     method: 'GET',
   }).then(function (response){
       console.log(response)
-      for ( var i = 0; i < 3; i++ ){
       var newRowEl = $('<row>');
-        newRowEl.attr('class', 'row');
-
+      newRowEl.attr('class', 'row');
+      $('#Reddit-Story').append(newRowEl);
+      for ( var i = 0; i < 3; i++ ){
+    
       var memeImgEl = $('<img>');
+        memeImgEl.attr('class', 'col-md-4')
         memeImgEl.attr('id', 'image' + i)
+        memeImgEl.attr('style', 'width:350px; height:350-px; object-fit:contain;')
 
       var numberOfMemes = response.data.children.length
       // console.log(numberOfMemes)
@@ -119,6 +148,6 @@ function getFormInfo(){
       newRowEl.append(memeImgEl);
       memeImgEl.attr('id', "meme_image") ;
       
-      $('#Reddit-Story').append(newRowEl);
+      
     }
   });
