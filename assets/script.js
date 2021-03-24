@@ -8,6 +8,9 @@ var newsSearchInput = ''
 var savedSearches = []
 var newsStory= $('#News-Story');
 
+var currentDate = moment().format('dddd MMMM Do YYYY');
+$("#current-date").text ("(" + currentDate + ")");
+
 
 var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
