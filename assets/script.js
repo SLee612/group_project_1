@@ -65,7 +65,7 @@ function getFormInfo(){
     searchedNewsListEl.append(searchedNewsListItem);
     newsSearchInputEl.val('');
 
-    var articleSearch = `https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=4c6477a39ac0888785968fdb8d31562e`;
+    var articleSearch = `https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=90f87db7a7e3e07626c4b9f81f1d9d6e`;
         $.ajax({
             url:articleSearch,
             method:'GET',
@@ -118,61 +118,52 @@ function getFormInfo(){
 
 function redditData(newsSearchInputText){
   $.ajax({
-    url: `https://www.reddit.com/search.json?q=${newsSearchInputText}&sort=trending`,
+    url: `https://www.reddit.com/r/memes/search.json?q=${newsSearchInputText}`,
     method: 'GET',
     }).then(function (response){
       console.log(response);
-      var newRowEl = $('<row>');
-        newRowEl.attr('class', 'row');
-        $('.card-body').append(memeImgEl);
 
-      
-    for ( var i = 0; i < 3; i++ ){
-    
-    var redditTitle = $('<h5>')
-      redditTitle.text(response.data.children[i].data.title);   
-      $('#Reddit-Story').append(redditTitle);
+      $('#Reddit-Story').text("");
+      var redditRow =$('<row>');
+            redditRow.addClass('row')
+            $('#Reddit-Story').append(redditRow)
 
-    var memeImgEl = $('<img>');
-      memeImgEl.attr('class', 'col-md-3')
-      memeImgEl.attr('id', 'image' + i)
-      memeImgEl.attr('style', 'width:250px; height:250-px; background-color:darkgrey; margin:5px')
-      memeImgEl.attr('src', response.data.children[i].data.url_overridden_by_dest)
-      $('#Reddit-Story').append(memeImgEl);
-      
-    }
+      for ( var i = 0; i < 4; i++ ){
+        var redditCard =$('<figure>');
+          redditCard.addClass('col-md-3');
+
+        var redditImage =$('<img>');
+          redditImage.attr('src',response.data.children[i].data.thumbnail);
+          redditImage.attr('style', 'height:200px; width:200px; object-fit:contain; border-radius:5px');
+        
+        var redditTitle = $('<p>');
+          redditTitle.text(response.data.children[i].data.title);
+          redditTitle.attr('style', 'font-size: 15px');
+  
+        var redditSource= $('<a>');
+         redditSource.attr( 'href', 'https://reddit.com' + response.data.children[i].data.permalink);
+         redditSource.attr('target', '_new')
+         
+          redditSource.text("view here");
+
+          redditCard.append(redditImage);
+          redditCard.append(redditTitle);
+          redditCard.append(redditSource);
+          redditRow.append(redditCard);
+      }
    });
   }
 
 
-  $.ajax({
-    url: `https://www.reddit.com/r/memes.json?`,
-    method: 'GET',
-  }).then(function (response){
-      console.log(response)
-      // var newRowEl = $('<row>');
-      // newRowEl.attr('class', 'row');
-      $('.card-body').append(memeImgEl);
 
-      
-      for ( var i = 0; i < 3; i++ ){
+  //make carousel for news section/maybe reddit section?
+  //design for cards? 
+  //for fun section?
+  //add date to top
+  //set up default display
+    //on opening, have top news/reddit displayed?
+  //
 
-      var memeImgEl = $('<img>');
-        memeImgEl.attr('class', 'col-md-3')
-        memeImgEl.attr('id', 'image' + i)
-        memeImgEl.attr('style', 'width:250px; height:250-px; background-color:darkgrey; margin:5px')
-        
 
-      var numberOfMemes = response.data.children.length
-      // console.log(numberOfMemes)
-      var randomIdx = Math.floor(Math.random()* numberOfMemes);
-      console.log(randomIdx)
-      
-      console.log(response.data.children[randomIdx].data.url_overridden_by_dest)
-      memeImgEl.attr('src', response.data.children[randomIdx].data.url_overridden_by_dest);
-      $('card-body').append(memeImgEl);
-      memeImgEl.attr('id', "meme_image") ;
-      
-    }
-  });
-
+  //<div>
+      //<a href = https://reddit.com
