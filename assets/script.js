@@ -145,34 +145,34 @@ function redditData(newsSearchInputText){
   }
 
 
-  // $.ajax({
-  //   url: `https://www.reddit.com/r/memes.json?`,
-  //   method: 'GET',
-  // }).then(function (response){
-  //     console.log(response)
-  //     // var newRowEl = $('<row>');
-  //     // newRowEl.attr('class', 'row');
-  //     $('.card-body').append(memeImgEl);
+  $.ajax({
+    url: `https://www.reddit.com/r/memes.json?`,
+    method: 'GET',
+  }).then(function (response){
+      console.log(response)
+      // var newRowEl = $('<row>');
+      // newRowEl.attr('class', 'row');
+      $('.card-body').append(memeImgEl);
 
       
-  //     for ( var i = 0; i < 3; i++ ){
+      for ( var i = 0; i < 3; i++ ){
 
-  //     var memeImgEl = $('<img>');
-  //       memeImgEl.attr('class', 'col-md-3')
-  //       memeImgEl.attr('id', 'image' + i)
-  //       memeImgEl.attr('style', 'width:250px; height:250-px; background-color:darkgrey; margin:5px')
+      var memeImgEl = $('<img>');
+        memeImgEl.attr('class', 'col-md-3')
+        memeImgEl.attr('id', 'image' + i)
+        memeImgEl.attr('style', 'width:250px; height:250-px; background-color:darkgrey; margin:5px')
         
 
-  //     var numberOfMemes = response.data.children.length
-  //     // console.log(numberOfMemes)
-  //     var randomIdx = Math.floor(Math.random()* numberOfMemes);
-  //     console.log(randomIdx)
+      var numberOfMemes = response.data.children.length
+      // console.log(numberOfMemes)
+      var randomIdx = Math.floor(Math.random()* numberOfMemes);
+      console.log(randomIdx)
       
-  //     console.log(response.data.children[randomIdx].data.url_overridden_by_dest)
-  //     memeImgEl.attr('src', response.data.children[randomIdx].data.url_overridden_by_dest);
-  //     $('card-body').append(memeImgEl);
-  //     memeImgEl.attr('id', "meme_image") ;
+      console.log(response.data.children[randomIdx].data.url_overridden_by_dest)
+      memeImgEl.attr('src', response.data.children[randomIdx].data.url_overridden_by_dest);
+      $('card-body').append(memeImgEl);
+      memeImgEl.attr('id', "meme_image") ;
       
-  //   }
-  // });
+    }
+  });
 
