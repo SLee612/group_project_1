@@ -135,7 +135,6 @@ function redditData(newsSearchInputText){
         var redditImage =$('<img>');
           redditImage.attr('src',response.data.children[i].data.thumbnail);
           redditImage.attr('style', 'height:200px; width:200px; object-fit:contain; border-radius:5px');
-
         
         var redditTitle = $('<p>');
           redditTitle.text(response.data.children[i].data.title);
@@ -155,6 +154,8 @@ function redditData(newsSearchInputText){
    });
   }
 
+
+
   //make carousel for news section/maybe reddit section?
   //design for cards? 
   //for fun section?
@@ -162,6 +163,7 @@ function redditData(newsSearchInputText){
   //set up default display
     //on opening, have top news/reddit displayed?
   //
+
 
   //<div>
       //<a href = https://reddit.com
