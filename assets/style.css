@@ -103,9 +103,9 @@ transform: rotate(135deg);
 }
 
 .search > div > input {
-color: white;
+color: #343939;
 font-size: 16px;
-background: transparent;
+background: whitesmoke;
 width: 25px;
 height: 25px;
 padding: 10px;
@@ -116,7 +116,7 @@ transition: width 0.5s;
 }
 
 .search > div > input::placeholder {
-color: #efefef;
+color: #343939;
 opacity: 0;
 transition: opacity 150ms ease-out;
 }
@@ -127,8 +127,23 @@ opacity: 1;
 
 .search > div > input:focus,
 .search > div > input:not(:placeholder-shown) {
-width: 250px;
+width: 200px;
 }
+
+.list-group-search {
+  position: relative;
+  display: block;
+  padding: 8px;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0,0,0,.125);
+}
+.list-group-search:hover {
+  cursor:pointer;
+  outline:none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed; 
+}
+
 
 /*-----------------------*/
 /* Parent wrapper to carousel. Width can be changed as needed. */
@@ -152,6 +167,7 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
 .news_card {
   display:none;
   position: absolute;
+  text-align:center;
   top:0;
   width: 100%;
   margin: auto;
