@@ -7,10 +7,16 @@ var searchedNewsListEl = $('.list-group');
 var saveList = $('<li>');
 var newsSearchInputText = ''
 var savedSearches = []
-var newsStory= $('#News-Story');
 var newsSearchInputEl = $('input')
 var savedSearchUnorderedListEl = $('<ul>')
 var previousSearchShown = false;
+
+//news carousel global variables
+var newsStory= $('#News-Story');
+var newsRow =$('#newsrow');
+var reportSlide = 0;
+var newsRow =$('#newsrow');
+var newsArray = newsRow[0].children || [];
 
 var today = moment().format("LL");
 console.log(today)
@@ -64,7 +70,7 @@ newsSearchInputEl.enterKey (function(event){
     previousSearchShown = false;
     getFormInfo();
   }
-  });
+});
 
 //news search get user input
 function getFormInfo(){
@@ -84,58 +90,149 @@ function getFormInfo(){
 
     searchedNewsListEl.append(searchedNewsListItem);
     newsSearchInputEl.val('');
+    
+  newsSearch(newsSearchInputText);
+  redditData(newsSearchInputText);
+  storeInputToLocalStorage()
+}
 
-    var articleSearch = `https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=90f87db7a7e3e07626c4b9f81f1d9d6e`;
-        $.ajax({
-            url:articleSearch,
-            method:'GET',
-        }).then(function(response){
-            console.log(response)
-            newsStory.text("");
-            var newsRow =$('<row>');
-            newsRow.addClass('row')
-            newsStory.append(newsRow)
-            for ( var i = 0; i < 3; i++ ){
-              var newsCard =$('<figure>');
-              newsCard.addClass('col-md-4');
+//store news user input to local storage
+function storeInputToLocalStorage(){
+    var stringSearchInput = JSON.stringify(savedSearches);
+    localStorage.setItem('searches', stringSearchInput);
 
-              var newsImage =$('<img>');
-              newsImage.attr('src',response.articles[i].image)
-              newsImage.attr('style', 'height:300px; width:300px; object-fit:contain')
-              
-              var newsTitle = $('<h5>')
-              newsTitle.text(response.articles[i].title);
-              var newsDescription = $('<p>')
-              newsDescription.text(response.articles[i].description);
-            //   var newsImage = $('<img>')
-            //   newsImage.addClass('newspic')
-            //   newsImage.attr('src','response.articles[i].image')
-              var newsSourceName= $('<p>')
-              newsSourceName.text((response.articles[i].source.name))
-              var newsSourceUrl= $('<p>')
-              newsSourceUrl.text((response.articles[i].source.url))  
+}
+function setInitNewsPost(){
+  newsArray[newsArray.length - 1].classList.add('prev');
+  newsArray[0].classList.add('active');
+  newsArray[0].classList.add('next');
+};
 
-              newsCard.append(newsImage)
-              newsCard.append(newsTitle)
-              newsCard.append(newsDescription)
-            //   newsCard.append(newsImage)
-              newsCard.append(newsSourceName)
-              newsCard.append(newsSourceUrl)
+function setNewsListeners(){
+  var next = $('.carousel__button--next')[0];
+  var prev = $('.carousel__button--prev')[0];
 
-              newsRow.append(newsCard)
-            }
+  next.addEventListener('click', moveNext);
+  prev.addEventListener('click', movePrev);
+};
 
-        });
-    redditData(newsSearchInputText);
-    storeInputToLocalStorage()
+function moveCarouselTo(reportSlide) {
+
+    // Preemptively set variables for the current next and previous slide, as well as the potential next or previous slide.
+    var newPrevious = reportSlide - 1;
+    var newNext = reportSlide + 1;
+    var oldPrevious = reportSlide - 2;
+    var oldNext = reportSlide + 2;
+
+  // Test if carousel has more than three items
+    
+    // Checks if the new potential slide is out of bounds and sets slide numbers
+    if (newPrevious <= 0) {
+      oldPrevious = (newsArray.length - 1);
+    } else if (newNext >= (newsArray.length - 1)){
+      oldNext = 0;
+    }
+
+    // Check if current slide is at the beginning or end and sets slide numbers
+    if (reportSlide === 0) {
+      newPrevious = (newsArray.length - 1);
+      oldPrevious = (newsArray.length - 2);
+      oldNext = (reportSlide + 1);
+    } else if (reportSlide === (newsArray.length -1)) {
+      newPrevious = (reportSlide - 1);
+      newNext = 0;
+      oldNext = 1;
+    }
+
+    // Now we've worked out where we are and where we're going, by adding and removing classes, we'll be triggering the carousel's transitions.
+  
+      // Based on the current slide, reset to default classes.
+
+      newsArray[oldPrevious].classList.remove('prev');
+      newsArray[oldNext].classList.remove('next');
+
+      // Add the new classes
+      newsArray[newPrevious].classList.add('prev')
+      newsArray[reportSlide].classList.add('active')
+      newsArray[newNext].classList.add('next')
+}
+
+
+// Next navigation handler
+function moveNext() {
+  console.log("Works!")
+
+  // If it's the last slide, reset to 0, else +1
+  if (reportSlide === (newsArray.length - 1)) {
+    reportSlide = 0;
+  } else {
+    newsArray[reportSlide].classList.remove('active');
+    reportSlide++;
   }
 
-  //store news user input to local storage
-  function storeInputToLocalStorage(){
-      var stringSearchInput = JSON.stringify(savedSearches);
-      localStorage.setItem('searches', stringSearchInput);
+  // Move carousel to updated slide
+  moveCarouselTo(reportSlide);
+}
 
+  // Previous navigation handler
+function movePrev() {
+  console.log("Works Too!")
+
+  // If it's the first slide, set as the last slide, else -1
+  if (reportSlide === 0) {
+    reportSlide = (newsArray.length - 1);
+  } else {
+    newsArray[reportSlide].classList.remove('active');
+    reportSlide--;
   }
+
+  // Move carousel to updated slide
+  moveCarouselTo(reportSlide);
+}
+
+
+function newsSearch(newsSearchInputText){
+  $.ajax({
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=c080133886efc4728fcd9059b5a45469`,
+      method:'GET',
+    }).then(function(response){
+      console.log(response)
+      newsRow.text("");
+      for ( var i = 0; i < response.articles.length; i++ ){
+        var newsCard =$('<figure>');
+        newsCard.addClass('news_card col-md-4');
+        
+        var newsImage =$('<img>');
+        newsImage.attr('src',response.articles[i].image)
+        newsImage.attr('style', 'height:300px; width:300px; object-fit:contain')
+        
+        var newsTitle = $('<h5>')
+        newsTitle.text(response.articles[i].title);
+        var newsDescription = $('<p>')
+        newsDescription.text(response.articles[i].description);
+
+        var newsSourceName= $('<p>')
+        newsSourceName.text((response.articles[i].source.name))
+        var newsSourceUrl= $('<p>')
+        newsSourceUrl.text((response.articles[i].source.url))  
+
+        newsCard.append(newsTitle)
+        newsCard.append(newsDescription)
+        newsCard.append(newsImage)
+        newsCard.append(newsSourceName)
+        newsCard.append(newsSourceUrl)
+
+        newsRow.append(newsCard)
+      }
+      function initNewsCarousel(){
+        setInitNewsPost();
+        setNewsListeners();
+      }
+      initNewsCarousel();
+
+  });
+}
+
 
 function redditData(newsSearchInputText){
   $.ajax({
