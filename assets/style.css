@@ -1,16 +1,18 @@
 * {
-  box-sizing:border-box;
+  
   padding: 0;
   margin: 0; 
+  
 }
-
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  background-image: url("https://user-images.githubusercontent.com/79335372/112549888-7dc60780-8d8c-11eb-9747-83811f321dd9.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 header {
+  
   background-color: #E4E3D0;
   color: #343939;
   text-shadow: 0 1px #0091c2;
@@ -27,12 +29,6 @@ h2 {
   text-shadow: 0 1px #0091c2;
 }
 
-  .news {
-    display: flex;
-    position: absolute;
-    color: white;
-    border: 4px solid black;
-  }
 
 main {
   display: flex;
@@ -41,9 +37,9 @@ main {
   top: 200px;
   left: 10px;
   text-align: center;
-
   border: 2px solid rgb(233, 241, 185);
 }
+
 
 .background-image {
       display: flex;
@@ -62,7 +58,7 @@ display: flex;
 
 align-items: center;
 position: relative;
-margin-top: -600px;
+margin-top: 25px;
 border: 2px solid #8B8D8D;
 box-shadow: 2px 2px 6px darkgray;
 }
@@ -100,9 +96,9 @@ transform: rotate(135deg);
 }
 
 .search > div > input {
-color: white;
+color: #343939;
 font-size: 16px;
-background: transparent;
+background: whitesmoke;
 width: 25px;
 height: 25px;
 padding: 10px;
@@ -113,7 +109,7 @@ transition: width 0.5s;
 }
 
 .search > div > input::placeholder {
-color: #efefef;
+color: #343939;
 opacity: 0;
 transition: opacity 150ms ease-out;
 }
@@ -124,10 +120,28 @@ opacity: 1;
 
 .search > div > input:focus,
 .search > div > input:not(:placeholder-shown) {
+
 width: 250px;
+
+
+
+
 }
 
+.list-group-search {
+  position: relative;
+  display: block;
+  padding: 8px;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0,0,0,.125);
 
+}
+.list-group-search:hover {
+  cursor:pointer;
+  outline:none;
+  border-color: #9ecaed;
+  box-shadow: 0 0 10px #9ecaed; 
+}
 
 /*-----------------------*/
 /* Parent wrapper to carousel. Width can be changed as needed. */
@@ -150,6 +164,8 @@ width: 250px;
 taking the properties we wish to animate 'transform' and 'opacity', along with the length of time in seconds. */
 .news_card {
   display:none;
+  position: absolute;
+  text-align:center;
   top:0;
   width: 100%;
   margin: auto;

@@ -1,16 +1,12 @@
 //news search form
 var searchBtn = $('#search-news-button');
-// var searchForm= $('.form-control');
-//clear historybutton
-var clearHistoryBtn = $('#clear-history');
 var searchedNewsListEl = $('.list-group');
-var saveList = $('<li>');
-var newsSearchInputText = ''
+var newsSearchInputText = 'top news'
 var savedSearches = []
 var newsSearchInputEl = $('input')
 var savedSearchUnorderedListEl = $('<ul>')
 var previousSearchShown = false;
-
+//current date
 var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
 $("#current-date").text("" + currentDate + "");
 
@@ -21,33 +17,51 @@ var reportSlide = 0;
 var newsRow =$('#newsrow');
 var newsArray = newsRow[0].children || [];
 
+
+//set default display to top news
+function init(){
+  newsSearch(newsSearchInputText);
+  redditData(newsSearchInputText);
+}
+
+//saved items
 var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
-newsSearchInputEl.on('click', init)
+//when search bar is clicked, list stored items
+newsSearchInputEl.on('click', displayPreviousSearched);
 
-// //get saved search and display on list
-function init(){
-  // console.log(searchInputSaved.length)
-  if (!previousSearchShown){
-  if (searchInputSaved != null){
-    savedSearches= searchInputSaved
+// $(document).on('click', function(event){
+//   event.preventDefault();
+//   if (event.currentTarget !== newsSearchInputEl){
+//     $('#test-list').empty();
+//     previousSearchShown = false;
+//   }
+// });
+
+//when previously searched item is clicked on, search that word.
+$(document).on('click', '.list-group-search', function(){
+  var clickedItem = $(this).text();
+  redditData(clickedItem);
+  newsSearch(clickedItem);
+});
+
+//get saved search and display on list
+function displayPreviousSearched(){
+  if (!previousSearchShown) {
+  if (searchInputSaved != null) {
+    savedSearches= searchInputSaved;
   }
+  //limit previously saved array to 5
+  if (savedSearches.length > 5) savedSearches.length = 5;
+  //create list elements for saved searches
   for (let i = 0; i < savedSearches.length; i++) {
-    $('#test-list').append('<li class = "list-group-item">' + savedSearches[i] + '</li>')
+    $('#test-list').append('<li class = "list-group-search">' + savedSearches[i] + '</li>');
+    $('#test-list').attr('style', 'border-radius:8px; text-align:center; color:grey;');
+
   }
   previousSearchShown = true;
   }
 }
-
-    // if(searchInputSaved != null){
-    //     savedSearches = searchInputSaved;
-    // }
-    // for (let i = 0; i < searchInputSaved.length; i++) {
-    //     $('#test-list').append.$(saveList)
-    //     saveList.text(searchInputSaved[i])
-    // }
-
-
 
 //news search button click
 $.fn.enterKey = function (fnc) {
@@ -73,35 +87,40 @@ newsSearchInputEl.enterKey (function(event){
 });
 
 //news search get user input
-function getFormInfo(){
-   newsSearchInputText = newsSearchInputEl.val(); 
-   newsSearchInputText = newsSearchInputText.charAt(0).toUpperCase() + newsSearchInputText.slice(1);
-    console.log(newsSearchInputText)
+function getFormInfo() {
+  newsSearchInputText = newsSearchInputEl.val(); 
+  //change all searches to have the first character capitalized.
+  newsSearchInputText = newsSearchInputText.charAt(0).toUpperCase() + newsSearchInputText.slice(1);
+    console.log(newsSearchInputText);
 
-    savedSearches.push(newsSearchInputText);
+  //add searched item to beginning of saved search array for local storage
+  savedSearches.unshift(newsSearchInputText);
 
-   if(!newsSearchInputText){
-       return
-   }
-   var searchedNewsListItem = $('<li>');
-    searchedNewsListItem.attr('class', 'list-group-item');
-
+  //if nothing is entered, return(nothing happens)
+  if(!newsSearchInputText) {
+    return;
+  }
+  //create new list item to store searched word
+  var searchedNewsListItem = $('<li>');
+    searchedNewsListItem.attr('class', 'list-group-search');
     searchedNewsListItem.text(newsSearchInputText);
-
+    //append list item to unordered list
     searchedNewsListEl.append(searchedNewsListItem);
-    newsSearchInputEl.val('');
+    
+  //reset search form 
+  newsSearchInputEl.val('');
     
   newsSearch(newsSearchInputText);
   redditData(newsSearchInputText);
-  storeInputToLocalStorage()
+  storeInputToLocalStorage();
 }
 
 //store news user input to local storage
-function storeInputToLocalStorage(){
+function storeInputToLocalStorage() {
     var stringSearchInput = JSON.stringify(savedSearches);
     localStorage.setItem('searches', stringSearchInput);
-
 }
+
 function setInitNewsPost(){
   newsArray[newsArray.length - 1].classList.add('prev');
   newsArray[reportSlide].classList.add('active');
@@ -117,7 +136,6 @@ function setNewsListeners(){
 };
 
 function moveCarouselTo(reportSlide) {
-
     // Preemptively set variables for the current next and previous slide, as well as the potential next or previous slide.
     var newPrevious = reportSlide - 1;
     var newNext = reportSlide + 1;
@@ -145,7 +163,7 @@ function moveCarouselTo(reportSlide) {
 
     // Now we've worked out where we are and where we're going, by adding and removing classes, we'll be triggering the carousel's transitions.
   
-      // Based on the current slide, reset to default classes.
+    // Based on the current slide, reset to default classes.
 
       newsArray[oldPrevious].classList.remove('prev');
       newsArray[reportSlide].classList.remove('prev');
@@ -191,16 +209,18 @@ function movePrev() {
   moveCarouselTo(reportSlide);
 }
 
-
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=4c6477a39ac0888785968fdb8d31562e`,
+
+url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18d2019f6d1a88d1affb0b498acceb23`,
+
       method:'GET',
     }).then(function(response){
       console.log(response)
       newsRow.text("");
       for ( var i = 0; i < response.articles.length; i++ ){
-        var newsCard =$('<figure>');
+        var 
+        =$('<figure>');
         newsCard.addClass('news_card col-10')
         
         var newsImage =$('<img>');
@@ -212,15 +232,21 @@ function newsSearch(newsSearchInputText){
         var newsDescription = $('<p>')
         newsDescription.text(response.articles[i].description);
 
-        var newsSourceName= $('<p>')
-        newsSourceName.text((response.articles[i].source.name))
-        var newsSourceUrl= $('<p>')
-        newsSourceUrl.text((response.articles[i].source.url))  
+        // var newsSourceName= $('<p>')
+        // newsSourceName.text((response.articles[i].source.name))
+        // var newsSourceUrl= $('<p>')
+        // newsSourceUrl.text((response.articles[i].source.url)) 
+
+        var newsSourceName= $('<a>');
+         newsSourceName.attr( 'href', response.articles[i].url);
+         newsSourceName.attr('target', '_new');
+         newsSourceName.text('View Full Story');
 
         // newsCard.append(newsTitle)
         // newsCard.append(newsDescription)
         newsCard.append(newsImage)
-        // newsCard.append(newsSourceName)
+
+        newsCard.append(newsSourceName)
         // newsCard.append(newsSourceUrl)
 
         newsRow.append(newsCard)
@@ -230,7 +256,6 @@ function newsSearch(newsSearchInputText){
         setNewsListeners();
       }
       initNewsCarousel();
-
   });
 }
 
@@ -256,11 +281,11 @@ function redditData(newsSearchInputText){
           redditCard.attr('style', 'background-color:lightgrey')
 
         var redditImage =$('<img>');
+          //avoid blank thumbnails, if blank, iterate through loop again 
           if (["self", "default", "image"].includes(response.data.children[i].data.thumbnail)) {
             i++;
             continue;
           }
-
           redditImage.attr('src', response.data.children[i].data.thumbnail);
           redditImage.attr('style', 'height:200px; width:200px; object-fit:contain; border-radius:5px');
         
@@ -270,31 +295,21 @@ function redditData(newsSearchInputText){
   
         var redditSource= $('<a>');
          redditSource.attr( 'href', 'https://reddit.com' + response.data.children[i].data.permalink);
-         redditSource.attr('target', '_new')
-         
-          redditSource.text("view here");
-
-          redditCard.append(redditImage);
-          redditCard.append(redditTitle);
-          redditCard.append(redditSource);
-          redditRow.append(redditCard);
+         redditSource.attr('target', '_new');
+         redditSource.text("view here");
+        
+        redditCard.append(redditImage);
+        redditCard.append(redditTitle);
+        redditCard.append(redditSource);
+        redditRow.append(redditCard);
           
-          count++;
-          i++;
+        count++;
+        i++;
       }
    });
   }
 
+init();
 
 
-  //make carousel for news section/maybe reddit section?
-  //design for cards? 
-  //for fun section?
-  //add date to top
-  //set up default display
-    //on opening, have top news/reddit displayed?
-  //
-
-
-  //<div>
-      //<a href = https://reddit.com
+ 
