@@ -11,15 +11,15 @@ var newsSearchInputEl = $('input')
 var savedSearchUnorderedListEl = $('<ul>')
 var previousSearchShown = false;
 
+var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
+$("#current-date").text("" + currentDate + "");
+
 //news carousel global variables
 var newsStory= $('#News-Story');
 var newsRow =$('#newsrow');
 var reportSlide = 0;
 var newsRow =$('#newsrow');
 var newsArray = newsRow[0].children || [];
-
-var today = moment().format("LL");
-console.log(today)
 
 var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
@@ -36,7 +36,7 @@ function init(){
     $('#test-list').append('<li class = "list-group-item">' + savedSearches[i] + '</li>')
   }
   previousSearchShown = true;
-}
+  }
 }
 
     // if(searchInputSaved != null){
@@ -184,7 +184,7 @@ function movePrev() {
   } else {
     newsArray[reportSlide].classList.remove('active');
     reportSlide--;
-  }
+}
 
   // Move carousel to updated slide
   moveCarouselTo(reportSlide);
