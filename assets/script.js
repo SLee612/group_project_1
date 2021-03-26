@@ -32,22 +32,14 @@ function init(){
   if (searchInputSaved != null){
     savedSearches= searchInputSaved
   }
+  if (savedSearches.length > 5) savedSearches.length = 5;
+
   for (let i = 0; i < savedSearches.length; i++) {
     $('#test-list').append('<li class = "list-group-item">' + savedSearches[i] + '</li>')
   }
   previousSearchShown = true;
   }
 }
-
-    // if(searchInputSaved != null){
-    //     savedSearches = searchInputSaved;
-    // }
-    // for (let i = 0; i < searchInputSaved.length; i++) {
-    //     $('#test-list').append.$(saveList)
-    //     saveList.text(searchInputSaved[i])
-    // }
-
-
 
 //news search button click
 $.fn.enterKey = function (fnc) {
@@ -78,7 +70,7 @@ function getFormInfo(){
    newsSearchInputText = newsSearchInputText.charAt(0).toUpperCase() + newsSearchInputText.slice(1);
     console.log(newsSearchInputText)
 
-    savedSearches.push(newsSearchInputText);
+    savedSearches.unshift(newsSearchInputText);
 
    if(!newsSearchInputText){
        return
@@ -190,7 +182,6 @@ function movePrev() {
   moveCarouselTo(reportSlide);
 }
 
-
 function newsSearch(newsSearchInputText){
   $.ajax({
       url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=c080133886efc4728fcd9059b5a45469`,
@@ -229,7 +220,6 @@ function newsSearch(newsSearchInputText){
         setNewsListeners();
       }
       initNewsCarousel();
-
   });
 }
 
@@ -284,16 +274,10 @@ function redditData(newsSearchInputText){
    });
   }
 
+  $(document).on('click', '.list-group-item', function(){
+    var clickedItem = $(this).text()
+    redditData(clickedItem);
+  });
 
 
-  //make carousel for news section/maybe reddit section?
-  //design for cards? 
-  //for fun section?
-  //add date to top
-  //set up default display
-    //on opening, have top news/reddit displayed?
-  //
-
-
-  //<div>
-      //<a href = https://reddit.com
+ 

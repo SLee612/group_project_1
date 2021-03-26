@@ -185,7 +185,7 @@ z-index: 800;
   form {
     width: 100%;
   }
-
+}
 /* Translate previous item to the left */
 .news_card.prev {
 transform: translateX(-100%); /* Move 'prev' item to the left */
