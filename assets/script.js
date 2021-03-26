@@ -4,27 +4,44 @@ var searchBtn = $('#search-news-button');
 //clear historybutton
 var clearHistoryBtn = $('#clear-history');
 var searchedNewsListEl = $('.list-group');
+var saveList = $('<li>');
 var newsSearchInputText = ''
 var savedSearches = []
 var newsStory= $('#News-Story');
 var newsSearchInputEl = $('input')
+var savedSearchUnorderedListEl = $('<ul>')
+var previousSearchShown = false;
 
-
-var today = moment().format("LL");
-console.log(today)
+var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
+$("#current-date").text("" + currentDate + "");
 
 var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
+newsSearchInputEl.on('click', init)
 
-//get saved search and display on list
+// //get saved search and display on list
 function init(){
-    if(searchInputSaved != null){
-        savedSearches = searchInputSaved;
-    }
-    for (let i = 0; i < savedSearches.length; i++) {
-        searchedNewsListEl.append(searchedNewsListItem.text(savedSearches[i]));
-    }
+  // console.log(searchInputSaved.length)
+  if (!previousSearchShown){
+  if (searchInputSaved != null){
+    savedSearches= searchInputSaved
+  }
+  for (let i = 0; i < savedSearches.length; i++) {
+    $('#test-list').append('<li class = "list-group-item">' + savedSearches[i] + '</li>')
+  }
+  previousSearchShown = true;
 }
+}
+
+    // if(searchInputSaved != null){
+    //     savedSearches = searchInputSaved;
+    // }
+    // for (let i = 0; i < searchInputSaved.length; i++) {
+    //     $('#test-list').append.$(saveList)
+    //     saveList.text(searchInputSaved[i])
+    // }
+
+
 
 //news search button click
 $.fn.enterKey = function (fnc) {
@@ -42,6 +59,9 @@ newsSearchInputEl.enterKey (function(event){
   if (event.which === 13){
     event.preventDefault();
     console.log("hello")
+    
+    $('#test-list').empty();
+    previousSearchShown = false;
     getFormInfo();
   }
   });
@@ -114,6 +134,7 @@ function getFormInfo(){
   function storeInputToLocalStorage(){
       var stringSearchInput = JSON.stringify(savedSearches);
       localStorage.setItem('searches', stringSearchInput);
+
   }
 
 function redditData(newsSearchInputText){
@@ -128,12 +149,21 @@ function redditData(newsSearchInputText){
             redditRow.addClass('row')
             $('#Reddit-Story').append(redditRow)
 
-      for ( var i = 0; i < 4; i++ ){
+      var count = 0;
+      var i = 0;
+
+      while(count < 4) {
         var redditCard =$('<figure>');
           redditCard.addClass('col-md-3');
+          redditCard.attr('style', 'background-color:lightgrey')
 
         var redditImage =$('<img>');
-          redditImage.attr('src',response.data.children[i].data.thumbnail);
+          if (["self", "default", "image"].includes(response.data.children[i].data.thumbnail)) {
+            i++;
+            continue;
+          }
+
+          redditImage.attr('src', response.data.children[i].data.thumbnail);
           redditImage.attr('style', 'height:200px; width:200px; object-fit:contain; border-radius:5px');
         
         var redditTitle = $('<p>');
@@ -150,6 +180,9 @@ function redditData(newsSearchInputText){
           redditCard.append(redditTitle);
           redditCard.append(redditSource);
           redditRow.append(redditCard);
+          
+          count++;
+          i++;
       }
    });
   }
