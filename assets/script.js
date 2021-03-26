@@ -104,8 +104,8 @@ function storeInputToLocalStorage(){
 }
 function setInitNewsPost(){
   newsArray[newsArray.length - 1].classList.add('prev');
-  newsArray[0].classList.add('active');
-  newsArray[0].classList.add('next');
+  newsArray[reportSlide].classList.add('active');
+  newsArray[reportSlide+1].classList.add('next');
 };
 
 function setNewsListeners(){
@@ -123,9 +123,8 @@ function moveCarouselTo(reportSlide) {
     var newNext = reportSlide + 1;
     var oldPrevious = reportSlide - 2;
     var oldNext = reportSlide + 2;
-
   // Test if carousel has more than three items
-    
+ 
     // Checks if the new potential slide is out of bounds and sets slide numbers
     if (newPrevious <= 0) {
       oldPrevious = (newsArray.length - 1);
@@ -149,7 +148,11 @@ function moveCarouselTo(reportSlide) {
       // Based on the current slide, reset to default classes.
 
       newsArray[oldPrevious].classList.remove('prev');
+      newsArray[reportSlide].classList.remove('prev');
       newsArray[oldNext].classList.remove('next');
+      newsArray[reportSlide].classList.remove('next');
+      newsArray[newPrevious].classList.remove('active');
+      newsArray[newNext].classList.remove('active');
 
       // Add the new classes
       newsArray[newPrevious].classList.add('prev')
@@ -166,7 +169,6 @@ function moveNext() {
   if (reportSlide === (newsArray.length - 1)) {
     reportSlide = 0;
   } else {
-    newsArray[reportSlide].classList.remove('active');
     reportSlide++;
   }
 
@@ -182,7 +184,6 @@ function movePrev() {
   if (reportSlide === 0) {
     reportSlide = (newsArray.length - 1);
   } else {
-    newsArray[reportSlide].classList.remove('active');
     reportSlide--;
 }
 
@@ -193,18 +194,18 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=c080133886efc4728fcd9059b5a45469`,
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=4c6477a39ac0888785968fdb8d31562e`,
       method:'GET',
     }).then(function(response){
       console.log(response)
       newsRow.text("");
       for ( var i = 0; i < response.articles.length; i++ ){
         var newsCard =$('<figure>');
-        newsCard.addClass('news_card col-md-4');
+        newsCard.addClass('news_card col-10')
         
         var newsImage =$('<img>');
         newsImage.attr('src',response.articles[i].image)
-        newsImage.attr('style', 'height:300px; width:300px; object-fit:contain')
+        newsImage.attr('style', 'height:400px; width:400px; object-fit:contain')
         
         var newsTitle = $('<h5>')
         newsTitle.text(response.articles[i].title);
@@ -216,11 +217,11 @@ function newsSearch(newsSearchInputText){
         var newsSourceUrl= $('<p>')
         newsSourceUrl.text((response.articles[i].source.url))  
 
-        newsCard.append(newsTitle)
-        newsCard.append(newsDescription)
+        // newsCard.append(newsTitle)
+        // newsCard.append(newsDescription)
         newsCard.append(newsImage)
-        newsCard.append(newsSourceName)
-        newsCard.append(newsSourceUrl)
+        // newsCard.append(newsSourceName)
+        // newsCard.append(newsSourceUrl)
 
         newsRow.append(newsCard)
       }
