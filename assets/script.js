@@ -210,7 +210,9 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=d9ebb74e570b94890ea84a21f7cea5f4`,
+
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18d2019f6d1a88d1affb0b498acceb23`,
+
       method:'GET',
     }).then(function(response){
       console.log(response)
