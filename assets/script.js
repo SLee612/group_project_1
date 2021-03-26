@@ -193,7 +193,7 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=c080133886efc4728fcd9059b5a45469`,
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18d2019f6d1a88d1affb0b498acceb23`,
       method:'GET',
     }).then(function(response){
       console.log(response)
