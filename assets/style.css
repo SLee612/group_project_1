@@ -115,9 +115,6 @@ opacity: 1;
 
 width: 250px;
 
-
-
-
 }
 
 .list-group-search {
@@ -134,10 +131,6 @@ width: 250px;
   border-color: #9ecaed;
   box-shadow: 0 0 10px #9ecaed; 
 }
-
-
-
-
 
 /*-----------------------*/
 /* Parent wrapper to carousel. Width can be changed as needed. */
@@ -158,13 +151,12 @@ width: 250px;
 /* By default we're hiding items (except the initial one) until the JS initiates. Elements are absolutely positioned with a width of 100% 
 (as we're styling for mobile first), letting the content's height dictate the height of the carousel. Our magic property here for all our animation needs is 'transition', 
 taking the properties we wish to animate 'transform' and 'opacity', along with the length of time in seconds. */
+
 .news_card {
   display:none;
   position: absolute;
-  text-align:center;
   top:0;
   width: 100%;
-  margin: auto;
   padding: 1rem 4rem;
   z-index: 100;
   transition: transform .5s, z-index .5s;
@@ -172,9 +164,13 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
 .news_card.active {
-display:block;
-position: relative;
-z-index: 900;
+  display:block;
+  position: relative;
+  z-index: 900;
+  background-color: #E4E3D0;
+  border-radius: 4px;
+  border: 2px solid #8B8D8D;
+
 }
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
@@ -183,6 +179,19 @@ z-index: 900;
 .news_card.next {
 z-index: 800;
 }
+
+.reddit_card {
+  background-color: #E4E3D0;
+  border-radius: 4px;
+  border: 2px solid #8B8D8D;
+  line-height: 1;
+}
+
+.reddit_card img{
+  margin-top:10px
+}
+
+
 
 @media screen and (max-width: 992px) {
   form {
@@ -247,3 +256,4 @@ transform: translateX(100%); /* Move 'next' item to the right */
   left: 47%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
+
