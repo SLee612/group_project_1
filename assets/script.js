@@ -1,3 +1,24 @@
+quoteBlock = $('#quoteblock');
+  const settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://type.fit/api/quotes",
+      "method": "GET"
+    }
+    $.ajax(settings).done(function (response) {
+      const data = JSON.parse(response);
+      console.log(data);
+      var randomQuote = Math.floor(Math.random()
+      * data.length);
+      console.log(randomQuote)
+      console.log(data[randomQuote].text)
+      console.log(data[randomQuote].author)
+      var author = data[randomQuote].author  || "Unknown"
+      console.log(author)
+      quoteBlock.text(data[randomQuote].text +" - " + author)
+    });
+
+
 //news search form
 var searchBtn = $('#search-news-button');
 var searchedNewsListEl = $('.list-group');
@@ -219,36 +240,34 @@ url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18
       console.log(response)
       newsRow.text("");
       for ( var i = 0; i < response.articles.length; i++ ){
-        var 
-        =$('<figure>');
+        var newsCard=$('<figure>');
         newsCard.addClass('news_card col-10')
         
         var newsImage =$('<img>');
-        newsImage.attr('src',response.articles[i].image)
-        newsImage.attr('style', 'height:400px; width:400px; object-fit:contain')
+
+          newsImage.attr('src',response.articles[i].image)
+          newsImage.attr('style', 'width:100%; object-fit:contain; border-radius:4px;')
+    
+
         
         var newsTitle = $('<h5>')
-        newsTitle.text(response.articles[i].title);
+          newsTitle.attr('style', 'text-align:center;')        
         var newsDescription = $('<p>')
-        newsDescription.text(response.articles[i].description);
-
-        // var newsSourceName= $('<p>')
-        // newsSourceName.text((response.articles[i].source.name))
-        // var newsSourceUrl= $('<p>')
-        // newsSourceUrl.text((response.articles[i].source.url)) 
+          newsDescription.text(response.articles[i].description);
+          newsDescription.attr('style', 'font-size: 17px')
 
         var newsSourceName= $('<a>');
          newsSourceName.attr( 'href', response.articles[i].url);
+         newsSourceName.attr('class', 'news_link')
          newsSourceName.attr('target', '_new');
-         newsSourceName.text('View Full Story');
+         newsSourceName.text(response.articles[i].title)
+         newsSourceName.attr('style', 'text-decoration:none;')
 
-        // newsCard.append(newsTitle)
-        // newsCard.append(newsDescription)
+        newsCard.append(newsTitle)
+        newsCard.append(newsDescription)
         newsCard.append(newsImage)
-
         newsCard.append(newsSourceName)
         // newsCard.append(newsSourceUrl)
-
         newsRow.append(newsCard)
       }
       function initNewsCarousel(){
@@ -276,9 +295,8 @@ function redditData(newsSearchInputText){
       var i = 0;
 
       while(count < 4) {
-        var redditCard =$('<figure>');
+        var redditCard =$('<figure class = "reddit_card">');
           redditCard.addClass('col-md-3');
-          redditCard.attr('style', 'background-color:lightgrey')
 
         var redditImage =$('<img>');
           //avoid blank thumbnails, if blank, iterate through loop again 
@@ -287,19 +305,18 @@ function redditData(newsSearchInputText){
             continue;
           }
           redditImage.attr('src', response.data.children[i].data.thumbnail);
-          redditImage.attr('style', 'height:200px; width:200px; object-fit:contain; border-radius:5px');
+          redditImage.attr('style', 'width:100%; object-fit:contain; border-radius:5px');
         
         var redditTitle = $('<p>');
-          redditTitle.text(response.data.children[i].data.title);
-          redditTitle.attr('style', 'font-size: 15px');
+          redditTitle.attr('style', 'font-size: 8px');
   
         var redditSource= $('<a>');
          redditSource.attr( 'href', 'https://reddit.com' + response.data.children[i].data.permalink);
          redditSource.attr('target', '_new');
-         redditSource.text("view here");
+         redditSource.text(response.data.children[i].data.title);
         
         redditCard.append(redditImage);
-        redditCard.append(redditTitle);
+        // redditCard.append(redditTitle);
         redditCard.append(redditSource);
         redditRow.append(redditCard);
           
@@ -309,7 +326,7 @@ function redditData(newsSearchInputText){
    });
   }
 
+  
+
+
 init();
-
-
- 
