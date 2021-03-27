@@ -46,7 +46,7 @@ width: 35%;
 height: 30%;
 display: flex;
 font-family: 'Newsreader';
-position: relative;
+position:inherit;
 margin-left: 65%;
 flex-direction: row;
 justify-content: flex-end;
@@ -61,6 +61,7 @@ margin-top: -5%;
 
 .search {
 margin-right: 20%;
+overflow: hidden;
 
 }
 
@@ -309,8 +310,13 @@ transform: translateX(100%); /* Move 'next' item to the right */
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-
-
+#quoteblock{
+  border: darkgray solid 3px;
+  padding: 5px 10px;
+  display: inline;
+  border-radius: 10px;
+  margin: 0 2%;
+}
 
 
 /* @media screen and (max-width: 768px) {
