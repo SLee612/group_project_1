@@ -1,3 +1,24 @@
+quoteBlock = $('#quoteblock');
+  const settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://type.fit/api/quotes",
+      "method": "GET"
+    }
+    $.ajax(settings).done(function (response) {
+      const data = JSON.parse(response);
+      console.log(data);
+      var randomQuote = Math.floor(Math.random()
+      * data.length);
+      console.log(randomQuote)
+      console.log(data[randomQuote].text)
+      console.log(data[randomQuote].author)
+      var author = data[randomQuote].author  || "Unknown"
+      console.log(author)
+      quoteBlock.text(data[randomQuote].text +" - " + author)
+    });
+
+
 //news search form
 var searchBtn = $('#search-news-button');
 var searchedNewsListEl = $('.list-group');
@@ -219,8 +240,7 @@ url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18
       console.log(response)
       newsRow.text("");
       for ( var i = 0; i < response.articles.length; i++ ){
-        var 
-        =$('<figure>');
+        var newsCard=$('<figure>');
         newsCard.addClass('news_card col-10')
         
         var newsImage =$('<img>');
@@ -306,7 +326,7 @@ function redditData(newsSearchInputText){
    });
   }
 
+  
+
+
 init();
-
-
- 

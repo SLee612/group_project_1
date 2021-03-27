@@ -13,58 +13,55 @@ body {
 
 header {
   
-  background-color: #E4E3D0;
-  color: #343939;
-  text-shadow: 0 1px #0091c2;
-  text-align: center;
+  background: linear-gradient(to bottom right, #F8C26A, #F4E2C4,#cbedf3);
+  border-radius: 5px;
+  padding: 25px;
+  border: 2px solid #5E6D62;
+  box-shadow: 2px 2x 6px #738678;
+  display: flex;
+}
+h1 {
+  font-size: 300%;
+  color: #334538;
+  text-shadow: 2px 2px #738678;
+  text-align: left;
   font-family: 'Newsreader', serif;
   font-weight: bolder;
-  padding: 25px;
-  border: 2px solid #8B8D8D;
-  box-shadow: 2px 2x 6px darkgray;
 }
-
 h2 {
+  color: #334538;
   font-style: italic;
-  text-shadow: 0 1px #0091c2;
+  
+  
+  text-align: left;
+  font-family: 'Newsreader', serif;
 }
 
-
-main {
-  display: flex;
-  position: absolute;
-  font-size: 18px;
-  top: 200px;
-  left: 10px;
-  text-align: center;
-  border: 2px solid rgb(233, 241, 185);
-}
-
-
-.background-image {
-      display: flex;
-       height: 100%;
-       width: 100%;
-       border-radius: 0px
-}
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 
 .flexbox {
-background: linear-gradient(#F8F0B3, #8B8D8D);
-width: 30%;
-height: 20%;
+background: linear-gradient(to top right, #eb835a,#F4E2C4,#cbedf3);
+width: 35%;
+height: 30%;
 display: flex;
-
-align-items: center;
+font-family: 'Newsreader';
 position: relative;
-margin-top: 25px;
-border: 2px solid #8B8D8D;
-box-shadow: 2px 2px 6px darkgray;
+margin-left: 65%;
+flex-direction: row;
+justify-content: flex-end;
+padding-left: 6%;
+border: 2px solid #5E6D62;
+box-shadow: 2px 2px 6px #738678;
+border-radius: 5px;
+margin-top: -5%;
+
+
 }
 
 .search {
-margin: 20px;
+margin-right: 20%;
+
 }
 
 .search > h3 {
@@ -73,7 +70,7 @@ font-weight: normal;
 
 .search > h1,
 .search > h3 {
-color: #343939;
+color: #334538;
 margin-bottom: 15px;
 text-shadow: 0 1px #0091c2;
 }
@@ -86,7 +83,7 @@ filter: drop-shadow(0 1px #0091c2);
 
 .search > div:after {
 content: "";
-background: white;
+background: #cbedf3;
 width: 4px;
 height: 20px;
 position: relative;
@@ -98,13 +95,14 @@ transform: rotate(135deg);
 .search > div > input {
 color: #343939;
 font-size: 16px;
-background: whitesmoke;
-width: 25px;
-height: 25px;
+background: #cbedf3;
+width: 40px;
+height: 40px;
 padding: 10px;
-border: solid 3px white;
+border: solid 3px #5E6D62;
 outline: none;
-border-radius: 35px;
+border-radius: 5px;
+
 transition: width 0.5s;
 }
 
@@ -121,7 +119,9 @@ opacity: 1;
 .search > div > input:focus,
 .search > div > input:not(:placeholder-shown) {
 
-width: 250px;
+
+width: 100%;
+
 
 }
 
@@ -129,8 +129,10 @@ width: 250px;
   position: relative;
   display: block;
   padding: 8px;
-  background-color: whitesmoke;
-  border: 1px solid rgba(0,0,0,.125);
+  background-color: #cbedf3;
+  border: 1px solid #5E6D62(0,0,0,.125);
+  border-radius: 5px;
+ 
 
 }
 .list-group-search:hover {
@@ -164,11 +166,18 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
   display:none;
   position: absolute;
   top:0;
-  width: 100%;
+
   padding: 1rem 4rem;
   z-index: 100;
   transition: transform .5s, z-index .5s;
-  border: black 2px solid;
+  border: #5E6D62 2px solid;
+  border-radius: 4px;
+  margin-left: 8%;
+  margin-top: 10%;
+  text-align: center;
+  background-color:  #cbedf3;
+  color: #334538;
+  
 }
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
@@ -176,11 +185,14 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
   display:block;
   position: relative;
   z-index: 900;
-  background-color: #E4E3D0;
+
+  background-color: #f8e4be;
   border-radius: 4px;
-  border: 2px solid #8B8D8D;
+  border: 2px solid #5E6D62;
 
 }
+
+
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
 /* Set 'z-index' to sit behind our '.active' item. */
@@ -192,12 +204,16 @@ z-index: 800;
 .reddit_card {
   background-color: #E4E3D0;
   border-radius: 4px;
-  border: 2px solid #8B8D8D;
+
+  border: 2px solid #5E6D62;
   line-height: 1;
+  text-decoration: none;
 }
 
 .reddit_card img{
-  margin-top:10px
+  margin-top:10px;
+  text-decoration: none;
+
 }
 
 
@@ -229,18 +245,41 @@ transform: translateX(100%); /* Move 'next' item to the right */
 .carousel__button--prev,
 .carousel__button--next {
   position:absolute;
-  top:50%;
+  margin-right: 2%;
+  margin-left: 2%;
+  top:80%;
   width: 3rem;
   height: 3rem;
-  background-color: #FFF;
   transform: translateY(-50%);
   border-radius: 50%;
   cursor: pointer; 
   z-index: 1001; /* Sit on top of everything */
-  border: 1px solid black;
+  
+  background-image: linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(73,132,180)),
+      color-stop(1, rgb(97,155,203))
+  );
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-shadow: 0px -1px 0px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+}
+
   /*  opacity: 0;  Hide buttons until carousel is initialised 
   transition:opacity 1s;*/
-}
+
 
 .carousel__button--prev {
   left:0;
@@ -257,14 +296,27 @@ transform: translateX(100%); /* Move 'next' item to the right */
   position: absolute;
   width: 10px;
   height: 10px;
-  top: 50%;
+  top: 55%;
   left: 54%;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
+  border-right: 2px solid #cbedf3;
+  border-bottom: 2px solid #cbedf3;
+ 
+  
   transform: translate(-50%, -50%) rotate(135deg);
 }
 .carousel__button--next::after {
   left: 47%;
   transform: translate(-50%, -50%) rotate(-45deg);
 }
+
+
+
+
+
+/* @media screen and (max-width: 768px) {
+  .flexbox {
+    margin-top: -48%;
+  }
+ 
+  } */
 
