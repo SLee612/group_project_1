@@ -1,3 +1,22 @@
+//news search form
+var searchBtn = $('#search-news-button');
+var searchedNewsListEl = $('.list-group');
+var newsSearchInputText = 'Trending'
+var savedSearches = []
+var newsSearchInputEl = $('input')
+var savedSearchUnorderedListEl = $('<ul>')
+var previousSearchShown = false;
+//current date
+var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
+$("#current-date").text("" + currentDate + "");
+
+//news carousel global variables
+var newsStory= $('#News-Story');
+var newsRow =$('#newsrow');
+var reportSlide = 0;
+var newsRow =$('#newsrow');
+var newsArray = newsRow[0].children || [];
+
 quoteBlock = $('#quoteblock');
   const settings = {
       "async": true,
@@ -18,27 +37,6 @@ quoteBlock = $('#quoteblock');
       quoteBlock.text(data[randomQuote].text +" - " + author)
     });
 
-
-//news search form
-var searchBtn = $('#search-news-button');
-var searchedNewsListEl = $('.list-group');
-var newsSearchInputText = 'top news'
-var savedSearches = []
-var newsSearchInputEl = $('input')
-var savedSearchUnorderedListEl = $('<ul>')
-var previousSearchShown = false;
-//current date
-var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
-$("#current-date").text("" + currentDate + "");
-
-//news carousel global variables
-var newsStory= $('#News-Story');
-var newsRow =$('#newsrow');
-var reportSlide = 0;
-var newsRow =$('#newsrow');
-var newsArray = newsRow[0].children || [];
-
-
 //set default display to top news
 function init(){
   newsSearch(newsSearchInputText);
@@ -50,14 +48,6 @@ var searchInputSaved = JSON.parse(localStorage.getItem('searches'));
 
 //when search bar is clicked, list stored items
 newsSearchInputEl.on('click', displayPreviousSearched);
-
-// $(document).on('click', function(event){
-//   event.preventDefault();
-//   if (event.currentTarget !== newsSearchInputEl){
-//     $('#test-list').empty();
-//     previousSearchShown = false;
-//   }
-// });
 
 //when previously searched item is clicked on, search that word.
 $(document).on('click', '.list-group-search', function(){
@@ -130,7 +120,7 @@ function getFormInfo() {
     
   //reset search form 
   newsSearchInputEl.val('');
-    
+   
   newsSearch(newsSearchInputText);
   redditData(newsSearchInputText);
   storeInputToLocalStorage();
@@ -232,43 +222,41 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-
-url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=18d2019f6d1a88d1affb0b498acceb23`,
-
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=d9ebb74e570b94890ea84a21f7cea5f4`,
       method:'GET',
     }).then(function(response){
       console.log(response)
       newsRow.text("");
+      $('#news-header').text(newsSearchInputText + ' News')
       for ( var i = 0; i < response.articles.length; i++ ){
-        var newsCard=$('<figure>');
-        newsCard.addClass('news_card col-10')
+        var newsCard =$('<figure>');
+          newsCard.addClass('news_card col-8')
         
-        var newsImage =$('<img>');
-
+        var newsImage =$('<img id = news-image>');
           newsImage.attr('src',response.articles[i].image)
-          newsImage.attr('style', 'width:100%; object-fit:contain; border-radius:4px;')
-    
-
-        
+          // newsImage.attr('style', 'width:100%; object-fit:contain; border-radius:4px;')
+  
         var newsTitle = $('<h5>')
-          newsTitle.attr('style', 'text-align:center;')        
-        var newsDescription = $('<p>')
+        var newsDescription = $('<p id = news_description>')
           newsDescription.text(response.articles[i].description);
-          newsDescription.attr('style', 'font-size: 17px')
+          
+        var newsSourceUrl = $('<p>')
+          newsSourceUrl.text(response.articles[i].source.url)
+          newsSourceUrl.attr('style', 'text-align:center; font-style:italic;')
 
-        var newsSourceName= $('<a>');
+        var newsSourceName= $('<a id= news_title>');
          newsSourceName.attr( 'href', response.articles[i].url);
          newsSourceName.attr('class', 'news_link')
          newsSourceName.attr('target', '_new');
          newsSourceName.text(response.articles[i].title)
-         newsSourceName.attr('style', 'text-decoration:none;')
 
         newsCard.append(newsTitle)
+        newsCard.append(newsSourceName)
         newsCard.append(newsDescription)
         newsCard.append(newsImage)
-        newsCard.append(newsSourceName)
-        // newsCard.append(newsSourceUrl)
+        newsCard.append(newsSourceUrl)
         newsRow.append(newsCard)
+        
       }
       function initNewsCarousel(){
         setInitNewsPost();
@@ -286,17 +274,20 @@ function redditData(newsSearchInputText){
     }).then(function (response){
       console.log(response);
 
+      $('#reddit-header').text(newsSearchInputText + ' on Reddit')
+
       $('#Reddit-Story').text("");
       var redditRow =$('<row>');
-            redditRow.addClass('row')
+            redditRow.addClass('row justify-content-center')
             $('#Reddit-Story').append(redditRow)
 
       var count = 0;
       var i = 0;
 
-      while(count < 4) {
-        var redditCard =$('<figure class = "reddit_card">');
-          redditCard.addClass('col-md-3');
+      while(count < 6) {
+        var redditCard =$('<figure class = "reddit-card">');
+          redditCard.addClass('col-xs-12 col-6 col-sm-6 col-md-6 col-lg-3 justify-items-center');
+          redditCard.attr('style', 'margin-right:15px;')
 
         var redditImage =$('<img>');
           //avoid blank thumbnails, if blank, iterate through loop again 
@@ -305,7 +296,7 @@ function redditData(newsSearchInputText){
             continue;
           }
           redditImage.attr('src', response.data.children[i].data.thumbnail);
-          redditImage.attr('style', 'width:100%; object-fit:contain; border-radius:5px');
+          redditImage.attr('style', 'width:100%; object-fit:contain; border-radius:5px;');
         
         var redditTitle = $('<p>');
           redditTitle.attr('style', 'font-size: 8px');
@@ -326,7 +317,7 @@ function redditData(newsSearchInputText){
    });
   }
 
-  
-
-
 init();
+
+
+ 

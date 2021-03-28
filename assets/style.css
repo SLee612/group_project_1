@@ -120,10 +120,7 @@ opacity: 1;
 .search > div > input:focus,
 .search > div > input:not(:placeholder-shown) {
 
-
 width: 100%;
-
-
 }
 
 .list-group-search {
@@ -133,9 +130,8 @@ width: 100%;
   background-color: #cbedf3;
   border: 1px solid #5E6D62(0,0,0,.125);
   border-radius: 5px;
- 
-
 }
+
 .list-group-search:hover {
   cursor:pointer;
   outline:none;
@@ -163,18 +159,37 @@ width: 100%;
 (as we're styling for mobile first), letting the content's height dictate the height of the carousel. Our magic property here for all our animation needs is 'transition', 
 taking the properties we wish to animate 'transform' and 'opacity', along with the length of time in seconds. */
 
+#news-section{
+  margin-top:100px;
+  background-color: rgb(248, 228, 190, 0.3);
+}
+
+#news_description{
+  font-size:18px;
+  text-align:left;
+}
+
+#news_title{
+  font-size: 22px;
+}
+
+#news-image{
+  max-height: 60%;
+  max-width:60%;
+  object-fit: contain;
+
+}
+
+
 .news_card {
   display:none;
   position: absolute;
   top:0;
-
   padding: 1rem 4rem;
   z-index: 100;
   transition: transform .5s, z-index .5s;
   border: #5E6D62 2px solid;
   border-radius: 4px;
-  margin-left: 8%;
-  margin-top: 10%;
   text-align: center;
   background-color:  #cbedf3;
   color: #334538;
@@ -186,11 +201,10 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
   display:block;
   position: relative;
   z-index: 900;
-
   background-color: #f8e4be;
   border-radius: 4px;
   border: 2px solid #5E6D62;
-
+  max-height: 500px;
 }
 
 
@@ -202,19 +216,39 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
 z-index: 800;
 }
 
-.reddit_card {
-  background-color: #E4E3D0;
-  border-radius: 4px;
+#reddit-section{
+  margin-top:100px;
+  background-color: rgb(248, 228, 190, 0.3);
+  margin-bottom:100px;
+}
 
+.reddit-card {
+  display:flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  background-color: #f8e4be;
+  border-radius: 4px;
   border: 2px solid #5E6D62;
   line-height: 1;
   text-decoration: none;
+  margin-right: 3px;
 }
 
-.reddit_card img{
-  margin-top:10px;
+.reddit-card img{
   text-decoration: none;
+  margin-top: 10px;
+}
 
+#news-header{
+  background-color: rgb(248, 228, 190, 0.75);
+  font-size:30px;
+  padding-left:20px;
+}
+
+#reddit-header{
+  background-color: rgb(248, 228, 190, 0.75);
+  font-size:30px;
+  padding-left:20px;
 }
 
 
@@ -233,6 +267,7 @@ z-index: 800;
   }
 }
 
+
 /* Translate previous item to the left */
 .news_card.prev {
 transform: translateX(-100%); /* Move 'prev' item to the left */
@@ -246,9 +281,9 @@ transform: translateX(100%); /* Move 'next' item to the right */
 .carousel__button--prev,
 .carousel__button--next {
   position:absolute;
-  margin-right: 2%;
-  margin-left: 2%;
-  top:80%;
+  margin-right: 5%;
+  margin-left: 5%;
+  top:70%;
   width: 3rem;
   height: 3rem;
   transform: translateY(-50%);
@@ -297,7 +332,7 @@ transform: translateX(100%); /* Move 'next' item to the right */
   position: absolute;
   width: 10px;
   height: 10px;
-  top: 55%;
+  top: 45%;
   left: 54%;
   border-right: 2px solid #cbedf3;
   border-bottom: 2px solid #cbedf3;
