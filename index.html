@@ -11,21 +11,18 @@
     <title>News Today!</title>
 </head>
 <body>
-    <header>
+    <header class="container">
         <h1>Super Awesome News!<h1>
         <h2 id="current-date">Today's Date</h2>
-        <container>
-            <div id="quoteblock"></div>
-                  </container>
-        <div class="flexbox">
-            <div class="search">
-            
-            <h3>Search Stories</h3>
-            <div>
-                <input type="text" placeholder="Search . . ." required>
-                <ul id = "test-list"></ul>
-            </div>
-            </div>
+        <row class="row">
+            <div class="col-7" id="quoteblock"></div>
+            <div class="flexbox col-4" >
+                <div class="search">     
+                    <h3 class="col-12">Search Stories</h3>
+                    <input type="text" id="input"placeholder="Search . . ." required>
+                    <ul id = "test-list"></ul> 
+                </div>
+        </row>   
         </div>
     </header>
 
@@ -44,9 +41,10 @@
         </div>-->
     <section id = "news-section">
         <p id = "news-header"></p>
-        <div class="carousel__button--next"></div>
-        <div class="carousel__button--prev"></div>
+        
         <div id="News-Story" class="container">
+            <div class="carousel__button--next"></div>
+            <div class="carousel__button--prev"></div>
             <row class="row justify-content-center" id="newsrow"></row>
         </div>
     </section>

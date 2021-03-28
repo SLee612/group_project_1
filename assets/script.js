@@ -17,6 +17,25 @@ var reportSlide = 0;
 var newsRow =$('#newsrow');
 var newsArray = newsRow[0].children || [];
 
+quoteBlock = $('#quoteblock');
+  const settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://type.fit/api/quotes",
+      "method": "GET"
+    }
+    $.ajax(settings).done(function (response) {
+      const data = JSON.parse(response);
+      console.log(data);
+      var randomQuote = Math.floor(Math.random()
+      * data.length);
+      console.log(randomQuote)
+      console.log(data[randomQuote].text)
+      console.log(data[randomQuote].author)
+      var author = data[randomQuote].author  || "Unknown"
+      console.log(author)
+      quoteBlock.text(data[randomQuote].text +" - " + author)
+    });
 
 //set default display to top news
 function init(){
@@ -223,7 +242,7 @@ function newsSearch(newsSearchInputText){
           
         var newsSourceUrl = $('<p>')
           newsSourceUrl.text(response.articles[i].source.url)
-          newsSourceUrl.attr('style', 'text-align:left; font-style:italic;')
+          newsSourceUrl.attr('style', 'text-align:center; font-style:italic;')
 
         var newsSourceName= $('<a id= news_title>');
          newsSourceName.attr( 'href', response.articles[i].url);
