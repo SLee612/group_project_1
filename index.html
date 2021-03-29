@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <h1>Super Awesome News!<h1>
+        <h1>Modern Mornings<h1>
         <h2 id="current-date">Today's Date</h2>
         <row class="row justify-content-between">
             <div class="col-12 col-sm-5 col-md-5 col-lg-4" id="quoteblock"></div>
@@ -31,10 +31,12 @@
     <section id = "news-section">
         <p id = "news-header"></p>
         
-        <div id="News-Story" class="container">
-            <div class="carousel__button--next"></div>
-            <div class="carousel__button--prev"></div>
-            <row class="row justify-content-center" id="newsrow"></row>
+        <div id="News-Story" class="container" >
+            <div class = "news-carousel" style = "display:flex; flex-direction:row;">
+                <div class="carousel__button--prev"></div>
+                    <row id="newsrow"></row>
+                <div class="carousel__button--next"></div>
+            </div>
         </div>
     </section>
 

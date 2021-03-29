@@ -1,11 +1,12 @@
 //news search form
 var searchBtn = $('#search-news-button');
 var searchedNewsListEl = $('.list-group');
-var newsSearchInputText = 'Trending'
+var newsSearchInputText = 'Top'
 var savedSearches = []
 var newsSearchInputEl = $('input')
 var savedSearchUnorderedListEl = $('<ul>')
 var previousSearchShown = false;
+
 //current date
 var currentDate = moment().format('dddd MMMM Do YYYY, h:mm a');
 $("#current-date").text("" + currentDate + "");
@@ -26,14 +27,9 @@ quoteBlock = $('#quoteblock');
     }
     $.ajax(settings).done(function (response) {
       const data = JSON.parse(response);
-      console.log(data);
       var randomQuote = Math.floor(Math.random()
       * data.length);
-      console.log(randomQuote)
-      console.log(data[randomQuote].text)
-      console.log(data[randomQuote].author)
       var author = data[randomQuote].author  || "Unknown"
-      console.log(author)
       quoteBlock.text(data[randomQuote].text +" - " + author)
     });
 
@@ -102,7 +98,6 @@ function getFormInfo() {
   newsSearchInputText = newsSearchInputEl.val(); 
   //change all searches to have the first character capitalized.
   newsSearchInputText = newsSearchInputText.charAt(0).toUpperCase() + newsSearchInputText.slice(1);
-    console.log(newsSearchInputText);
 
   //add searched item to beginning of saved search array for local storage
   savedSearches.unshift(newsSearchInputText);
@@ -170,8 +165,6 @@ function moveCarouselTo(reportSlide) {
       newNext = 0;
       oldNext = 1;
     }
-
-    // Now we've worked out where we are and where we're going, by adding and removing classes, we'll be triggering the carousel's transitions.
   
     // Based on the current slide, reset to default classes.
 
@@ -191,7 +184,6 @@ function moveCarouselTo(reportSlide) {
 
 // Next navigation handler
 function moveNext() {
-  console.log("Works!")
 
   // If it's the last slide, reset to 0, else +1
   if (reportSlide === (newsArray.length - 1)) {
@@ -206,7 +198,6 @@ function moveNext() {
 
   // Previous navigation handler
 function movePrev() {
-  console.log("Works Too!")
 
   // If it's the first slide, set as the last slide, else -1
   if (reportSlide === 0) {
@@ -221,12 +212,15 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=4c6477a39ac0888785968fdb8d31562e`,
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=123598b5c4546834e98d361225dda577`,
       method:'GET',
     }).then(function(response){
-      console.log(response)
       newsRow.text("");
+
       $('#news-header').text(newsSearchInputText + ' News')
+
+      carouselNext = $('<div>')
+        carouselNext.attr('class', 'carousel__button--next')
 
       for ( var i = 0; i < response.articles.length; i++ ){
         var newsCard =$('<figure>');
@@ -239,25 +233,33 @@ function newsSearch(newsSearchInputText){
         var newsTitle = $('<h5>')
         var newsDescription = $('<p id = news_description>')
           newsDescription.text(response.articles[i].description);
+          newsDescription.attr('style', 'overflow-wrap:break-word')
+        
           
         var newsSourceUrl = $('<p>')
           newsSourceUrl.text(response.articles[i].source.url)
-          newsSourceUrl.attr('style', 'text-align:center; font-style:italic;')
+          newsSourceUrl.attr('style', 'text-align:center; font-style:italic; overflow-wrap:break-word')
 
         var newsSourceName= $('<a id= news_title>');
          newsSourceName.attr( 'href', response.articles[i].url);
          newsSourceName.attr('class', 'news_link')
          newsSourceName.attr('target', '_new');
+         newsSourceName.attr('style', 'overflow-wrap:break-word');
          newsSourceName.text(response.articles[i].title)
 
-        newsCard.append(newsTitle)
-        newsCard.append(newsSourceName)
-        newsCard.append(newsDescription)
-        newsCard.append(newsImage)
-        newsCard.append(newsSourceUrl)
-        newsRow.append(newsCard)
-        
+         newsCard.append(newsTitle)
+         newsCard.append(newsSourceName)
+         newsCard.append(newsDescription)
+         newsCard.append(newsImage)
+         newsCard.append(newsSourceUrl)
+         newsRow.append(newsCard)
+
+
+         
       }
+      // newsRow.append(carouselPrev);
+
+
       function initNewsCarousel(){
         setInitNewsPost();
         setNewsListeners();
@@ -272,7 +274,6 @@ function redditData(newsSearchInputText){
     url: `https://www.reddit.com/r/memes/search.json?q=${newsSearchInputText}`,
     method: 'GET',
     }).then(function (response){
-      console.log(response);
      
       $('#Reddit-Story').text("");
 
@@ -287,7 +288,7 @@ function redditData(newsSearchInputText){
 
       while(count < 6) {
         var redditCard =$('<figure class = "reddit-card">');
-        redditCard.addClass('col-xs-12 col-6 col-sm-6 col-md-6 col-lg-3');
+        redditCard.addClass('col-xs-9 col-9 col-sm-4 col-md-4 col-lg-3');
         redditCard.attr('style', 'margin:15px;')
 
         var redditImage =$('<img>');
