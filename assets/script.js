@@ -212,7 +212,7 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=1aa6666e5686d2b41a5109e40bdf26c2`,
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=c080133886efc4728fcd9059b5a45469`,
       method:'GET',
     }).then(function(response){
       newsRow.text("");
