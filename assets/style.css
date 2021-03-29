@@ -1,9 +1,8 @@
 * {
-  
   padding: 0;
   margin: 0; 
-  
 }
+
 body {
   background-image: url("https://user-images.githubusercontent.com/79335372/112549888-7dc60780-8d8c-11eb-9747-83811f321dd9.jpg");
   background-repeat: no-repeat;
@@ -12,7 +11,6 @@ body {
 }
 
 header {
-  
   background: linear-gradient(to bottom right, #F8C26A, #F4E2C4,#cbedf3);
   border-radius: 5px;
   padding: 25px;
@@ -20,6 +18,7 @@ header {
   box-shadow: 2px 2x 6px #738678;
   display: flex;
 }
+
 h1 {
   font-size: 300%;
   color: #334538;
@@ -28,6 +27,7 @@ h1 {
   font-family: 'Newsreader', serif;
   font-weight: bolder;
 }
+
 h2 {
   color: #334538;
   font-style: italic;
@@ -36,7 +36,6 @@ h2 {
   text-align: left;
   font-family: 'Newsreader', serif;
 }
-
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 
@@ -47,7 +46,6 @@ height: 30%;
 display: flex;
 font-family: 'Newsreader';
 position:inherit;
-/* margin-left: 65%; */
 flex-direction: row;
 justify-content: flex-end;
 padding-left: 6%;
@@ -56,14 +54,11 @@ box-shadow: 2px 2px 6px #738678;
 border-radius: 5px;
 margin-top: 5px;
 margin-left: 5px;
-
-
 }
 
 .search {
 margin-right: 20%;
 overflow: hidden;
-
 }
 
 .search > h3 {
@@ -104,7 +99,6 @@ padding: 10px;
 border: solid 3px #5E6D62;
 outline: none;
 border-radius: 5px;
-
 transition: width 0.5s;
 }
 
@@ -181,7 +175,6 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
 
 }
 
-
 .news_card {
   display:none;
   position: absolute;
@@ -199,16 +192,14 @@ taking the properties we wish to animate 'transform' and 'opacity', along with t
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
 .news_card.active {
-  display:block;
-  position: relative;
+  display:inherit;
+  margin:auto;
+  margin-bottom:20px;
   z-index: 900;
   background-color: #f8e4be;
   border-radius: 4px;
   border: 2px solid #5E6D62;
-  max-height: 500px;
 }
-
-
 
 /* Display the initial item and bring it to the front using 'z-index'. These styles also apply to the 'active' item. */
 /* Set 'z-index' to sit behind our '.active' item. */
@@ -264,39 +255,61 @@ iframe{
   font-family: 'Newsreader';
 }
 
-@media screen and (max-width: 992px) {
-  form {
-    width: 50%;
-    object-fit: ;
-  }
-}
-
-/* Cards are stacked on top of each other at 768px or smaller */
-@media screen and (max-width: 768px) {
-  form {
-    width: 100%;
-  }
-}
-
-
 /* Translate previous item to the left */
 .news_card.prev {
-transform: translateX(-100%); /* Move 'prev' item to the left */
+  transform: translateX(-100%); /* Move 'prev' item to the left */
 }
-
-/* Translate next item to the right */
+  
+  /* Translate next item to the right */
 .news_card.next {
-transform: translateX(100%); /* Move 'next' item to the right */
+  transform: translateX(100%); /* Move 'next' item to the right */
 }
 
-.carousel__button--prev,
+  
+.carousel__button--prev{
+  display: flex;
+  flex-grow: 0;
+  flex-shrink:0.5;
+  margin-top: 200px;;
+  width: 40px;
+  height: 60px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  cursor: pointer; 
+  z-index: 1001;
+  
+  background-image: linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(73,132,180)),
+      color-stop(1, rgb(97,155,203))
+  );
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  text-shadow: 0px -1px 0px rgba(0,0,0,.5);
+  -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+
+}
+
 .carousel__button--next {
-  position:absolute;
-  margin-right: 5%;
-  margin-left: 5%;
-  top:70%;
-  width: 3rem;
-  height: 3rem;
+  /* display:inline-block; */
+  position:relative;
+  margin-top:200px;
+  top:50%;
+  width: 40px;
+  height: 60px;
+  flex-grow: 0;
+  flex-shrink:0.5;
   transform: translateY(-50%);
   border-radius: 50%;
   cursor: pointer; 
@@ -327,15 +340,6 @@ transform: translateX(100%); /* Move 'next' item to the right */
   /*  opacity: 0;  Hide buttons until carousel is initialised 
   transition:opacity 1s;*/
 
-
-.carousel__button--prev {
-  left:0;
-}
-
-.carousel__button--next {
-  right:0;
-}
-
 /* Use pseudo elements to insert arrows inside of navigation buttons */
 .carousel__button--prev::after,
 .carousel__button--next::after {
@@ -347,7 +351,7 @@ transform: translateX(100%); /* Move 'next' item to the right */
   left: 54%;
   border-right: 2px solid #cbedf3;
   border-bottom: 2px solid #cbedf3;
- 
+  
   
   transform: translate(-50%, -50%) rotate(135deg);
 }
@@ -364,11 +368,16 @@ transform: translateX(100%); /* Move 'next' item to the right */
   margin-left:5px;
 }
 
-
-/* @media screen and (max-width: 768px) {
-  .flexbox {
-    margin-top: -48%;
+@media screen and (max-width: 992px) {
+  form {
+    width: 50%;
+    object-fit: ;
   }
- 
-  } */
+}
 
+/* Cards are stacked on top of each other at 768px or smaller */
+@media screen and (max-width: 768px) {
+  form {
+    width: 100%;
+  }
+}
