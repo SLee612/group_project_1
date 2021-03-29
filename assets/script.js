@@ -52,6 +52,8 @@ newsSearchInputEl.on('click', displayPreviousSearched);
 //when previously searched item is clicked on, search that word.
 $(document).on('click', '.list-group-search', function(){
   var clickedItem = $(this).text();
+  $('#test-list').empty();
+  previousSearchShown = false;
   redditData(clickedItem);
   newsSearch(clickedItem);
 });
@@ -88,9 +90,7 @@ $.fn.enterKey = function (fnc) {
 
 newsSearchInputEl.enterKey (function(event){
   if (event.which === 13){
-    event.preventDefault();
-    console.log("hello")
-    
+    event.preventDefault();    
     $('#test-list').empty();
     previousSearchShown = false;
     getFormInfo();
@@ -141,7 +141,6 @@ function setInitNewsPost(){
 function setNewsListeners(){
   var next = $('.carousel__button--next')[0];
   var prev = $('.carousel__button--prev')[0];
-
   next.addEventListener('click', moveNext);
   prev.addEventListener('click', movePrev);
 };
@@ -222,12 +221,13 @@ function movePrev() {
 
 function newsSearch(newsSearchInputText){
   $.ajax({
-      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=d9ebb74e570b94890ea84a21f7cea5f4`,
+      url:`https://gnews.io/api/v4/search?q=${newsSearchInputText}&country=us&token=4c6477a39ac0888785968fdb8d31562e`,
       method:'GET',
     }).then(function(response){
       console.log(response)
       newsRow.text("");
       $('#news-header').text(newsSearchInputText + ' News')
+
       for ( var i = 0; i < response.articles.length; i++ ){
         var newsCard =$('<figure>');
           newsCard.addClass('news_card col-8')
@@ -273,21 +273,22 @@ function redditData(newsSearchInputText){
     method: 'GET',
     }).then(function (response){
       console.log(response);
-
-      $('#reddit-header').text(newsSearchInputText + ' on Reddit')
-
+     
       $('#Reddit-Story').text("");
-      var redditRow =$('<row>');
-            redditRow.addClass('row justify-content-center')
-            $('#Reddit-Story').append(redditRow)
+
+      var redditTitle = $('#reddit-header');
+        redditTitle.text(newsSearchInputText + ' on Reddit')
 
       var count = 0;
       var i = 0;
 
+      var cardRow = $('<div class= "row justify-content-center">')
+          $('#Reddit-Story').append(cardRow);
+
       while(count < 6) {
         var redditCard =$('<figure class = "reddit-card">');
-          redditCard.addClass('col-xs-12 col-6 col-sm-6 col-md-6 col-lg-3 justify-items-center');
-          redditCard.attr('style', 'margin-right:15px;')
+        redditCard.addClass('col-xs-12 col-6 col-sm-6 col-md-6 col-lg-3');
+        redditCard.attr('style', 'margin:15px;')
 
         var redditImage =$('<img>');
           //avoid blank thumbnails, if blank, iterate through loop again 
@@ -296,10 +297,7 @@ function redditData(newsSearchInputText){
             continue;
           }
           redditImage.attr('src', response.data.children[i].data.thumbnail);
-          redditImage.attr('style', 'width:100%; object-fit:contain; border-radius:5px;');
-        
-        var redditTitle = $('<p>');
-          redditTitle.attr('style', 'font-size: 8px');
+          redditImage.attr('style', 'margin: auto; max-width:100%; max-height:100%; object-fit:contain; border-radius:5px;');
   
         var redditSource= $('<a>');
          redditSource.attr( 'href', 'https://reddit.com' + response.data.children[i].data.permalink);
@@ -307,9 +305,8 @@ function redditData(newsSearchInputText){
          redditSource.text(response.data.children[i].data.title);
         
         redditCard.append(redditImage);
-        // redditCard.append(redditTitle);
         redditCard.append(redditSource);
-        redditRow.append(redditCard);
+        cardRow.append(redditCard);
           
         count++;
         i++;
